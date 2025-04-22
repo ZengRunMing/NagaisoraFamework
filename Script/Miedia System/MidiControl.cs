@@ -9,10 +9,8 @@ using Melanchall.DryWetMidi.Interaction;
 
 namespace NagaisoraFamework.Miedia
 {
-	public class MidiControl : CommMonoScriptObject, IDisposable
+	public class MidiControl : CommMonoScriptObject
 	{
-		//public MidiPianoForm[] MidiPianoForms;
-
 		public int OutputDeviceID = 0;
 
 		public MidiFile MidiFile;
@@ -168,18 +166,15 @@ namespace NagaisoraFamework.Miedia
 				Playback.Loop = false;
 			}
 
-			Playback.Start();
+			Playback?.Start();
 		}
 
 		public void Stop()
 		{
-			if (Playback != null && Playback.IsRunning)
-			{
-				Playback.Stop();
-			}
-
+			Playback?.Stop();
 			Playback?.Dispose();
 			Playback = null;
+
 			OutputDevice?.Dispose();
 		}
 
@@ -192,6 +187,7 @@ namespace NagaisoraFamework.Miedia
 		{
 			Playback?.Stop();
 			Playback?.Dispose();
+			Playback = null;
 			OutputDevice?.Dispose();
 			MidiFile = null;
 		}

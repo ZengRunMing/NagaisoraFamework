@@ -5,7 +5,7 @@ namespace NagaisoraFamework.Miedia
 	using Miedia;
 	using System;
 
-	public class BGMControl : MonoBehaviour, IDisposable
+	public class BGMControl : MonoBehaviour
     {
 		public AudioControl AudioControl;
 		public MidiControl MidiControl;
