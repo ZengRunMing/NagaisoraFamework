@@ -18,15 +18,17 @@ namespace NagaisoraFamework.Miedia
 
 		public IEnumerable<TrackChunk> MidiChannels;
 
-		public IDictionary<int, List<Note>> Notekeys = new Dictionary<int, List<Note>>();
+		public IDictionary<int, List<Note>> Notekeys;
 
 		public void Init()
 		{
-			Notekeys.Clear();
+			Notekeys = new Dictionary<int, List<Note>>();
 
 			foreach (var form in MidiPianoForms)
 			{
 				Notekeys.Add(form.ID, new());
+
+				form.notes = null;
 			}
 			
 			MidiControl.Playback.NotesPlaybackStarted += KeyDownEvent;

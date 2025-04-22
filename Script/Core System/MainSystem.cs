@@ -71,14 +71,13 @@ namespace NagaisoraFamework
 		public static float GolbalFixedDeltaTime;
 
 		public delegate void SelectControl(int STMA);
-		public delegate void ApplicationQuitEvent();
 
 		public delegate void KeyDownEvent(bool[] bools);
 		public static event KeyDownEvent KeyDown;
 
 		public static event SelectControl SelMove;
 
-		public static event ApplicationQuitEvent OnApplicationQuit;
+		public static event EventHandler OnApplicationQuit;
 
 		public static float Fps;
 
@@ -465,7 +464,7 @@ namespace NagaisoraFamework
 
 		public static void Quit()
 		{
-			OnApplicationQuit?.Invoke();
+			OnApplicationQuit?.Invoke(null, null);
 
 			if (ScoreData != null)
 			{

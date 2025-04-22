@@ -3,8 +3,9 @@ using UnityEngine;
 namespace NagaisoraFamework.Miedia
 {
 	using Miedia;
+	using System;
 
-	public class BGMControl : MonoBehaviour
+	public class BGMControl : MonoBehaviour, IDisposable
     {
 		public AudioControl AudioControl;
 		public MidiControl MidiControl;
@@ -63,6 +64,11 @@ namespace NagaisoraFamework.Miedia
 		public void MidiStop()
 		{
 			MidiControl.Stop();
+		}
+
+		public void Dispose()
+		{
+			MidiControl.Dispose();
 		}
 	}
 }
