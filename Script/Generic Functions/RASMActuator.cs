@@ -1011,4 +1011,60 @@ namespace NagaisoraFamework
 			return new NRtype(obj, type, PublicTokenName);
 		}
 	}
+
+	public class Token
+	{
+		public long Position;
+		public int Type;
+
+		public Token(long position, int type)
+		{
+			Position = position;
+			Type = type;
+		}
+	}
+
+	public class Executable
+	{
+		public string Name;
+		public string Type;
+		public MapDictionary<string, Token> token;
+		public byte[] Memory;
+		public MapDictionary<string, long> PrToken;
+		public MapDictionary<long, long> CmToken;
+		public byte[] Program;
+
+		public Executable(string name, string type, MapDictionary<string, Token> TOK, byte[] memory, byte[] prtoken, byte[] program)
+		{
+			Name = name;
+			Type = type;
+			token = TOK;
+			Memory = memory;
+			Program = program;
+
+			PrToken = new MapDictionary<string, long>();
+			CmToken = new MapDictionary<long, long>();
+
+			MemoryStream TMS = new(prtoken);
+			BinaryReader binary = new(TMS, Encoding.UTF8);
+
+			long prtl = binary.ReadInt64();
+			long cmtl = binary.ReadInt64();
+
+			for (long i = 0; i < prtl; i++)
+			{
+				string TName = binary.ReadString();
+				long TPTR = binary.ReadInt64();
+				PrToken.Add(TName, TPTR);
+			}
+
+			for (long i = 0; i < cmtl; i++)
+			{
+				long Index = binary.ReadInt64();
+				long TPTR = binary.ReadInt64();
+				CmToken.Add(Index, TPTR);
+			}
+		}
+	}
+
 }

@@ -32,48 +32,29 @@ namespace NagaisoraFamework
 			Debug.Log("MainSystem初始化");
 			StartTime = DateTime.Now;
 
-			string ConfigFileName = $"{DataPath}\\Config.cfg";
-
 			Debug.Log($"SystemStart.Awake() Calling ConfigLoad({ConfigFileName}) => 开始装载配置文件");
 
 			MainSystem.ConfigData = ConfigData.Default;
 
-			if (!File.Exists(ConfigFileName))
+			FileStream ConfigDataStream = new(ConfigFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+			if (ConfigDataStream.Length == 0)
 			{
 				Debug.Log($"配置文件不存在, 装载默认设置并保存");
-			}
 
-			FileStream ConfigDataStream = new(ConfigFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+				ConfigFileSystem.SaveConfig(ConfigDataStream, MainSystem.ConfigData);
+			}
 
 			try
 			{
-				BinaryReader ConfigReader = new(ConfigDataStream, Encoding.UTF8);
-				ConfigReader.BaseStream.Seek(0x00, SeekOrigin.Begin);
-
-				string hider = $"{SCLENAME}\\CONFIGDATA";
-				int hiderbufferlength = Encoding.UTF8.GetBytes(hider).Length;
-
-				byte[] readhiderbuffer = ConfigReader.ReadBytes(hiderbufferlength);
-
-				if (Encoding.UTF8.GetString(readhiderbuffer) != hider)
-				{
-					throw new InvalidDataException("文件头不匹配");
-				}
-
-				MainSystem.ConfigData = ConfigData.FormBinary(ConfigReader.ReadBytes((int)ConfigReader.BaseStream.Length - hiderbufferlength));
-				ConfigReader.Close();
+				MainSystem.ConfigData = ConfigFileSystem.LoadConfig(ConfigDataStream);
 			}
 			catch (Exception e)
 			{
 				Debug.LogException(e);
-				BinaryWriter ConfigWriter = new(ConfigDataStream, Encoding.UTF8, true);
-				ConfigWriter.BaseStream.Seek(0x00, SeekOrigin.Begin);
-
-				ConfigWriter.Write(Encoding.UTF8.GetBytes($"{SCLENAME}\\CONFIGDATA"));
-				ConfigWriter.Write(MainSystem.ConfigData.ToBinary());
-
-				ConfigWriter.Close();
 			}
+
+			ConfigDataStream.Close();
 
 			Debug.Log("SystemStart.Awake() Calling ScoreDataSystem.ScoreDataLoad(default) => 装载ScoreData");
 			MainSystem.ScoreData = ScoreDataSystem.ScoreDataLoad(null);

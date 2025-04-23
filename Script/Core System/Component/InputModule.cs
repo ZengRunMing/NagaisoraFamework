@@ -352,9 +352,7 @@ namespace NagaisoraFamework
 				Touch touch = base.input.GetTouch(i);
 				if (touch.type != TouchType.Indirect)
 				{
-					bool pressed;
-					bool released;
-					PointerEventData touchPointerEventData = GetTouchPointerEventData(touch, out pressed, out released);
+					PointerEventData touchPointerEventData = GetTouchPointerEventData(touch, out bool pressed, out bool released);
 					ProcessTouchPress(touchPointerEventData, pressed, released);
 					if (!released)
 					{

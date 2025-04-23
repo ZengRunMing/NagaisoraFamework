@@ -19,6 +19,8 @@ namespace NagaisoraFamework
 
 		public static string DataPath = GetDataPath();
 
+		public static string ConfigFileName = $"{DataPath}\\Config.cfg";
+
 		public static STGManager GolbalSTGManager;
 
 		public static PoolManager GolbalPoolManager;

@@ -98,4 +98,29 @@ namespace NagaisoraFamework.Miedia
 			Initialization();
 		}
 	}
+
+	[Serializable]
+	public struct SEAudio
+	{
+		public SEType SEType;
+		public string Name;
+		public bool TimeScale;
+		public AudioClip AudioClip;
+
+		public SEAudio(AudioClip audioClip, string name = "", bool timescale = false, SEType type = SEType.AsName)
+		{
+			if (type == SEType.AsName)
+			{
+				Name = name;
+				SEType = SEType.AsName;
+			}
+			else
+			{
+				Name = Enum.GetName(typeof(SEType), type);
+				SEType = type;
+			}
+			TimeScale = timescale;
+			AudioClip = audioClip;
+		}
+	}
 }
