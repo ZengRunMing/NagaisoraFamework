@@ -40,10 +40,10 @@ namespace NagaisoraFamework.STGSystem
 
 		public int Order;
 
-		public Dictionary<string, IFlag> Flags;
-		List<IFlag> RemovedConditionFlags;
-		public Dictionary<string, IFlag> RunningFlags;
-		List<IFlag> RemovedRunningFlags;
+		public Dictionary<string, ISTGComponentFlag> Flags;
+		List<ISTGComponentFlag> RemovedConditionFlags;
+		public Dictionary<string, ISTGComponentFlag> RunningFlags;
+		List<ISTGComponentFlag> RemovedRunningFlags;
 
 		public uint GameTime
 		{
@@ -146,7 +146,7 @@ namespace NagaisoraFamework.STGSystem
 				return;
 			}
 
-			IFlag[] ConditionFlagsArray = Flags.Values.ToArray();
+			ISTGComponentFlag[] ConditionFlagsArray = Flags.Values.ToArray();
 			RemovedConditionFlags.Clear();
 			foreach (var flag in ConditionFlagsArray)
 			{
@@ -159,13 +159,13 @@ namespace NagaisoraFamework.STGSystem
 				RemovedConditionFlags.Add(flag);
 			}
 
-			IFlag[] RemovedConditionFlagsArray = RemovedConditionFlags.ToArray();
+			ISTGComponentFlag[] RemovedConditionFlagsArray = RemovedConditionFlags.ToArray();
 			foreach (var flag in RemovedConditionFlagsArray)
 			{
 				RemoveFlags(flag);
 			}
 
-			IFlag[] RunningFlagsArray = RunningFlags.Values.ToArray();
+			ISTGComponentFlag[] RunningFlagsArray = RunningFlags.Values.ToArray();
 			RemovedRunningFlags.Clear();
 			foreach (var flag in RunningFlagsArray)
 			{
@@ -177,7 +177,7 @@ namespace NagaisoraFamework.STGSystem
 				}
 			}
 
-			IFlag[] RemovedRunningFlagsArray = RemovedRunningFlags.ToArray();
+			ISTGComponentFlag[] RemovedRunningFlagsArray = RemovedRunningFlags.ToArray();
 			foreach (var flag in RemovedRunningFlagsArray)
 			{
 				RemoveRunningFlags(flag);
@@ -295,7 +295,7 @@ namespace NagaisoraFamework.STGSystem
 			STGManager.KeyDown -= KeyDown;
 		}
 
-		public virtual void AddFlags(params IFlag[] flags)
+		public virtual void AddFlags(params ISTGComponentFlag[] flags)
 		{
 			foreach(var flag in flags)
 			{
@@ -317,7 +317,7 @@ namespace NagaisoraFamework.STGSystem
 		}
 
 
-		public virtual void AddRunningFlags(params IFlag[] flags)
+		public virtual void AddRunningFlags(params ISTGComponentFlag[] flags)
 		{
 			foreach (var flag in flags)
 			{
@@ -330,7 +330,7 @@ namespace NagaisoraFamework.STGSystem
 			}
 		}
 
-		public virtual void RemoveRunningFlags(params IFlag[] flags)
+		public virtual void RemoveRunningFlags(params ISTGComponentFlag[] flags)
 		{
 			foreach (var flag in flags)
 			{

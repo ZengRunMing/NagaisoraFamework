@@ -1419,10 +1419,13 @@ namespace NagaisoraFamework
 		string FlagName { get; }
 		bool MultipleExecutions { get; }
 
-		STGComponent Component { get; set; }
-
 		bool Condition();
 		void Action();
+	}
+
+	public interface ISTGComponentFlag : IFlag
+	{
+		STGComponent Component { get; set; }
 	}
 
 	[Serializable]
