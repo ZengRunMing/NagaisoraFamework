@@ -30,7 +30,10 @@ namespace NagaisoraFamework.Miedia
 
 		public void FixedUpdate()
 		{
-			Message.text = "";
+			if (Message != null)
+			{
+				Message.text = "";
+			}
 
 			if (MidiPianoControl != null)
 			{
@@ -44,12 +47,15 @@ namespace NagaisoraFamework.Miedia
 
 			foreach (Note note in notes)
 			{
-				if (Message.text != null & Message.text != "")
+				if (Message != null && Message.text != "")
 				{
 					Message.text += " | ";
 				}
 
-				Message.text += note + " " + note.Velocity;
+				if (Message != null)
+				{
+					Message.text += note + " " + note.Velocity;
+				}
 			}
 		}
 	}

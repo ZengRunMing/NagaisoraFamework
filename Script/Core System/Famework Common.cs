@@ -354,14 +354,20 @@ namespace NagaisoraFamework
 	{
 		public float MusicVolume;
 		public float SEVolume;
-		public int FPS;
+		public byte BGMode;
+		public byte OutputDeviceID;
+		public byte Resolution;
+		public byte DrawMode;
+		public int Frame;
+
+
 		public Dictionary<string, KeyConfig> KeyConfigs;
 
 		public static ConfigData Default = new()
 		{
 			MusicVolume = 100,
 			SEVolume = 80,
-			FPS = 120,
+			Frame = 120,
 			KeyConfigs = new Dictionary<string, KeyConfig>()
 			{
 				{"default", KeyConfig.Default },
@@ -376,7 +382,11 @@ namespace NagaisoraFamework
 
 			writer.Write(MusicVolume);
 			writer.Write(SEVolume);
-			writer.Write(FPS);
+			writer.Write(BGMode);
+			writer.Write(OutputDeviceID);
+			writer.Write(Resolution);
+			writer.Write(DrawMode);
+			writer.Write(Frame);
 
 			string[] keys = KeyConfigs.Keys.ToArray();
 			KeyConfig[] values = KeyConfigs.Values.ToArray();
@@ -437,7 +447,11 @@ namespace NagaisoraFamework
 			{
 				MusicVolume = binaryReader.ReadSingle(),
 				SEVolume = binaryReader.ReadSingle(),
-				FPS = binaryReader.ReadInt32(),
+				BGMode = binaryReader.ReadByte(),
+				OutputDeviceID = binaryReader.ReadByte(),
+				Resolution = binaryReader.ReadByte(),
+				DrawMode = binaryReader.ReadByte(),
+				Frame = binaryReader.ReadInt32(),
 			};
 
 			int count = binaryReader.ReadInt32();
@@ -503,8 +517,8 @@ namespace NagaisoraFamework
 		public int Rank;
 
 		public DateTime CreateTime;
-
 		public TimeSpan TotalPlayerTime;
+
 		public int PlayerIndex;
 		public int ClearIndex;
 
